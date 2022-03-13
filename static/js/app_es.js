@@ -31,7 +31,7 @@ const game_time = document.querySelector('#game-time');
 const result_time = document.querySelector('#result-time');
 
 let level_index = 0;
-let level = CONSTANT.LEVEL[level_index];
+let level = CONSTANT_ES.LEVEL[level_index];
 
 let timer = null;
 let pause = false;
@@ -53,9 +53,9 @@ const getGameInfo = () => JSON.parse(localStorage.getItem('game'));
 const initGameGrid = () => {
     let index = 0;
 
-    for (let i = 0; i < Math.pow(CONSTANT.GRID_SIZE,2); i++) {
-        let row = Math.floor(i/CONSTANT.GRID_SIZE);
-        let col = i % CONSTANT.GRID_SIZE;
+    for (let i = 0; i < Math.pow(CONSTANT_ES.GRID_SIZE,2); i++) {
+        let row = Math.floor(i/CONSTANT_ES.GRID_SIZE);
+        let col = i % CONSTANT_ES.GRID_SIZE;
         if (row === 2 || row === 5) cells[index].style.marginBottom = '10px';
         if (col === 2 || col === 5) cells[index].style.marginRight = '10px';
 
@@ -71,7 +71,7 @@ const getPlayerName = () => localStorage.getItem('player_name');
 const showTime = (seconds) => new Date(seconds * 1000).toISOString().substr(11, 8);
 
 const clearSudoku = () => {
-    for (let i = 0; i < Math.pow(CONSTANT.GRID_SIZE, 2); i++) {
+    for (let i = 0; i < Math.pow(CONSTANT_ES.GRID_SIZE, 2); i++) {
         cells[i].innerHTML = '';
         cells[i].classList.remove('filled');
         cells[i].classList.remove('selected');
@@ -92,9 +92,9 @@ const initSudoku = () => {
     saveGameInfo();
 
     // Mostramos el sudoku al div
-    for (let i = 0; i < Math.pow(CONSTANT.GRID_SIZE, 2); i++) {
-        let row = Math.floor(i / CONSTANT.GRID_SIZE);
-        let col = i % CONSTANT.GRID_SIZE;
+    for (let i = 0; i < Math.pow(CONSTANT_ES.GRID_SIZE, 2); i++) {
+        let row = Math.floor(i / CONSTANT_ES.GRID_SIZE);
+        let col = i % CONSTANT_ES.GRID_SIZE;
         
         cells[i].setAttribute('data-value', su.question[row][col]);
 
@@ -109,7 +109,7 @@ const initSudoku = () => {
 const loadSudoku = () => {
     let game = getGameInfo();
 
-    game_level.innerHTML = CONSTANT.LEVEL_NAME[game.level];
+    game_level.innerHTML = CONSTANT_ES.LEVEL_NAME[game.level];
 
     su = game.su;
     su_answer = su.answer;
@@ -120,9 +120,9 @@ const loadSudoku = () => {
     level_index = game.level;
 
     // Mostramos el sudoku al div
-    for (let i = 0; i < Math.pow(CONSTANT.GRID_SIZE, 2); i++) {
-        let row = Math.floor(i / CONSTANT.GRID_SIZE);
-        let col = i % CONSTANT.GRID_SIZE;
+    for (let i = 0; i < Math.pow(CONSTANT_ES.GRID_SIZE, 2); i++) {
+        let row = Math.floor(i / CONSTANT_ES.GRID_SIZE);
+        let col = i % CONSTANT_ES.GRID_SIZE;
         
         cells[i].setAttribute('data-value', su_answer[row][col]);
         cells[i].innerHTML = su_answer[row][col] !== 0 ? su_answer[row][col] : '';
@@ -135,14 +135,14 @@ const loadSudoku = () => {
 }
 
 const hoverBg = (index) => {
-    let row = Math.floor(index / CONSTANT.GRID_SIZE);
-    let col = index % CONSTANT.GRID_SIZE;
+    let row = Math.floor(index / CONSTANT_ES.GRID_SIZE);
+    let col = index % CONSTANT_ES.GRID_SIZE;
 
     let box_start_row = row - row % 3;
     let box_start_col = col - col % 3;
 
-    for (let i = 0; i < CONSTANT.BOX_SIZE; i++) {
-        for (let j = 0; j < CONSTANT.BOX_SIZE; j++) {
+    for (let i = 0; i < CONSTANT_ES.BOX_SIZE; i++) {
+        for (let j = 0; j < CONSTANT_ES.BOX_SIZE; j++) {
             let cell = cells[9 * (box_start_row + i) + (box_start_col + j)];
             cell.classList.add('hover');
         }
@@ -190,14 +190,14 @@ const checkErr = (value) => {
 
     let index = selected_cell;
 
-    let row = Math.floor(index / CONSTANT.GRID_SIZE);
-    let col = index % CONSTANT.GRID_SIZE;
+    let row = Math.floor(index / CONSTANT_ES.GRID_SIZE);
+    let col = index % CONSTANT_ES.GRID_SIZE;
 
     let box_start_row = row - row % 3;
     let box_start_col = col - col % 3;
 
-    for (let i = 0; i < CONSTANT.BOX_SIZE; i++) {
-        for (let j = 0; j < CONSTANT.BOX_SIZE; j++) {
+    for (let i = 0; i < CONSTANT_ES.BOX_SIZE; i++) {
+        for (let j = 0; j < CONSTANT_ES.BOX_SIZE; j++) {
             let cell = cells[9 * (box_start_row + i) + (box_start_col + j)];
             if (!cell.classList.contains('selected')) addErr(cell);
         }
@@ -266,8 +266,8 @@ const initNumberInputEvent = () => {
                 cells[selected_cell].innerHTML = index + 1;
                 cells[selected_cell].setAttribute('data-value', index + 1);
                 // Añadimos la respuesta
-                let row = Math.floor(selected_cell / CONSTANT.GRID_SIZE);
-                let col = selected_cell % CONSTANT.GRID_SIZE;
+                let row = Math.floor(selected_cell / CONSTANT_ES.GRID_SIZE);
+                let col = selected_cell % CONSTANT_ES.GRID_SIZE;
                 su_answer[row][col] = index + 1;
                 // Guardamos el juego
                 saveGameInfo()
@@ -314,7 +314,7 @@ const startGame = () => {
     player_name.innerHTML = name_input.value.trim();
     setPlayerName(name_input.value.trim());
 
-    game_level.innerHTML = CONSTANT.LEVEL_NAME[level_index];
+    game_level.innerHTML = CONSTANT_ES.LEVEL_NAME[level_index];
 
     showTime(seconds);  
 
@@ -357,9 +357,9 @@ document.querySelector('#switch1').addEventListener('click', () => {
 })
 
 document.querySelector('#btn-level').addEventListener('click', (e) => {
-    level_index = level_index + 1 > CONSTANT.LEVEL.length - 1 ? 0 : level_index + 1;
-    level = CONSTANT.LEVEL[level_index];
-    e.target.innerHTML = CONSTANT.LEVEL_NAME[level_index];
+    level_index = level_index + 1 > CONSTANT_ES.LEVEL.length - 1 ? 0 : level_index + 1;
+    level = CONSTANT_ES.LEVEL[level_index];
+    e.target.innerHTML = CONSTANT_ES.LEVEL_NAME[level_index];
 
 });
 
@@ -428,8 +428,8 @@ document.querySelector('#btn-delete').addEventListener('click', () => {
     cells[selected_cell].innerHTML = '';
     cells[selected_cell].setAttribute('data-value', 0);
 
-    let row = Math.floor(selected_cell / CONSTANT.GRID_SIZE);
-    let col = selected_cell % CONSTANT.GRID_SIZE;
+    let row = Math.floor(selected_cell / CONSTANT_ES.GRID_SIZE);
+    let col = selected_cell % CONSTANT_ES.GRID_SIZE;
 
     su_answer[row][col] = 0;
 
